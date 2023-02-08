@@ -5,10 +5,10 @@ This is a small python websockets program to run on a server that will read audi
 An app on the client Android phones called Kõnele acts as the input service which sends the audio to the server and acts as an Android input device, like a keyboard.
 
 This program uses these other software systems:
-- [whisper.cpp](https://github.com/ggerganov/whisper.cpp/) for audio to voice transcription
-- [Kõnele](https://github.com/Kaljurand/K6nele-service) client Android app; installation onto phone via f-droid repo is recommended
-- [wsocket](https://github.com/ksenginew/WSocket) Python websocket library
-- sox audio processing command line tools
+- [whisper.cpp](https://github.com/ggerganov/whisper.cpp/) for audio to voice transcription, install to server with git clone
+- [Kõnele](https://github.com/Kaljurand/K6nele-service) client Android app; install to phone via f-droid repo is recommended
+- [wsocket](https://github.com/ksenginew/WSocket) Python websocket library, install to server with pip
+- sox audio processing command line tools, install to server with OS tools (apt etc.)
 
 The setup is pretty simple, with a few things on the server side and a few on the client side (Android phone).
 
@@ -57,15 +57,15 @@ When you click on the microphone input on your Android phone's virtual keyboard,
 If you click on the Kõnele app itself (instead of the microphone on the Android keyboard) it will do a web search with the recognized text instead.
 
 ----
-# Limitations and cautions
+## Limitations and cautions
 
 There is absolutely no security in this implementation. I run this over a tinc VPN, but if you expose the server IP to the world there are security implications. That is your problem.
 
 There can only be one client connection to the voice recognition server at a time. The code does even attempt to use a different filename to capture the audio. This could be fixed pretty easily.
 
-The audio format in the transmission to the server is Kõnele's default raw and uncompressed audio. Kõnele supports many audio formats, but if you change the format you will also have to change the sox command on the server side. The encoding format could be determined by the url on the server, but this is not currently going done.
+The audio format in the transmission to the server is Kõnele's default raw and uncompressed audio. Kõnele supports many audio formats, but if you change the format on the client side in Kõnele, you will also have to change the sox command on the server side. The encoding format could be determined dynamically by the url on the server, but this is not currently done.
 
 ---
-# Feedback
+## Feedback
 
-These instructions are being improved quickly now. If you encounter problems, send a question and the instructions will be improved.
+These instructions are being improved quickly now. If you encounter problems, send a question and these instructions will be improved.
