@@ -26,7 +26,7 @@ Install wsocket library. Use a venv if you like:
 
 Install sox audio processing library (e.g. apt install sox, for Ubuntu/Debian).
 
-Install "minimal.py" from this repo into your working directory and edit the host and port in the run(). The "host" should be the IP address of the server (set up above) where you will be running the websocket whisper server, and the "port" can be most anything but must agree with whatever you set up on the client side (below). I used port 9001.
+Install "minimal.py" from this repo into your working directory and edit the host and port in the run(). The "host" should be the IP address of the interface on the local machine that the program should listen for service requests. This might be "localhost", or possibly "0.0.0.0" to listen on all interfaces on the server. The "port" can be most anything but must agree with whatever you set up on the client side (below). I used port 9001.
 
 Start the server running from the command line and be ready to watch output:
 ````
