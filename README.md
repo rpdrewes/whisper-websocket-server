@@ -76,7 +76,7 @@ The whisper.cpp code is more optimized for Apple silicon, and does not run nearl
 
 - [WhisperInput](https://github.com/alex-vt/WhisperInput)
 
-I compiled it and tried it out and it works great. For my setup (Pixel 5a with fast network and fast server) it is significantly slower returning recognitions since it is running on-phone, but it still runs very well! Give it a try.
+I compiled it and tried it out and it works great. For my setup (Pixel 5a with fast network and fast server) it is on average significantly slower returning recognitions since it is running on-phone compared to running on a fast server, but it still runs very well! Give it a try. For short recognitions, it could be faster to run on-phone, especially if your server is not fast.
 
 ---
 ## Feedback
