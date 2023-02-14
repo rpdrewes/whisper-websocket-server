@@ -70,7 +70,7 @@ The audio format in the transmission to the server is Kõnele's default raw and 
 ---
 ## Alternatives
 
-The whisper.cpp code is more optimized for Apple silicon, and does not run nearly as fast on Android devices as it does on Apple. But it still runs fairly well! If you want to try to run a local (on-phone, offline with no network connection) then I recommend that you look at this:
+The whisper.cpp code is more optimized for Apple silicon, and does not run nearly as fast on Android phones as it does on Apple phones (a quarter the speed?) But it still runs fairly well! If you want to try to run a local (on-phone, offline with no network connection) then I recommend that you look at this:
 
 - [WhisperInput](https://github.com/alex-vt/WhisperInput)
 
