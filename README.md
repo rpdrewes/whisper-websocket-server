@@ -17,6 +17,8 @@ The setup is pretty simple, with a few things on the server side and a few on th
 
 On your server machine where the voice recognition will be performed, install ggerganov whisper.cpp from github repo as explained there. Link above. Download "base" model. Test it to the point that you can run the local transcription tests in the README with base model.
 
+In minimal.py, edit the "transcmd" to reference the location of your whisper installation.
+
 Your server should have a well-known IP address. You could probably also use dynamic DNS of some sort, instead of a fixed IP address.
 
 Install wsocket library. Use a venv if you like:
