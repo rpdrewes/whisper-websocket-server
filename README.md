@@ -78,6 +78,12 @@ The whisper.cpp code is more optimized for Apple silicon, and does not run nearl
 
 I compiled it and tried it out and it works great. For my setup (Pixel 5a with fast network and fast server) it is on average significantly slower returning recognitions since it is running on-phone compared to running on a fast server, but it still runs very well! Give it a try. For short recognitions, it could be faster to run on-phone, especially if your server is not fast.
 
+Another server based approach uses the Kaldi voice recognizer instead of Whisper:
+
+- [Kaldi-Gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server)
+
+I ran a Kaldi server for years and accessed it from my open Android phone using Kõnele as the frontend (just as I describe above). It worked pretty well. I find Whisper to be a much superior voice recognition system though. I think maybe Kaldi works better in other languages than it does in English, but I doubt it compares to Whisper these days.
+
 ---
 ## Feedback
 
