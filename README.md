@@ -52,7 +52,7 @@ I also use the "Anysoft Keyboard" app from f-droid as my basic input mechanism o
 ---
 ## Usage
 
-In order to get the microphone on the virtual keyboard to invoke Kõnele (and send audio to the server for transcription) you will probably have to invoke the Kõnele app first on its own once, after you boot your phone. After that it should happen automatically until you reboot your phone.
+In order to get the microphone on the virtual keyboard to invoke Kõnele (and send audio to the server for transcription) you will probably have to invoke the Kõnele app first on its own once, after you boot your phone. After that it should happen automatically when you invoke your normal input system, until you reboot your phone.
 
 When you click on the microphone input on your Android phone's virtual keyboard, you should see the server side "minimal.py" print a message acknowledging the connection. As you speak, the audio data should be captured into a .raw audio file in the working directory on the server side. When you click to stop input on the phone, you should see a message on the server side indicating that the audio is complete, and whisper.cpp should be invoked on the saved audio file after conversion to an audio format that whisper.cpp wants. Then a message should be sent back to the phone with the text of the transcription. The resulting text can be inserted into a text message or email as you wish.
 
