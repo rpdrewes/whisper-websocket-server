@@ -58,7 +58,7 @@ When you click on the microphone input on your Android phone's virtual keyboard,
 
 If you click on the Kõnele app itself (instead of the microphone on the Android keyboard) it will do a web search with the recognized text instead.
 
-----
+---
 ## Limitations and cautions
 
 There is absolutely no security in this implementation. I run this over a tinc VPN, but if you expose the server IP to the world there are security implications. That is your problem.
@@ -66,6 +66,15 @@ There is absolutely no security in this implementation. I run this over a tinc V
 There can only be one client connection to the voice recognition server at a time. The code does not attempt to use a different filename to capture the audio if multiple requests come in at once. I'm not even sure if the websockets implementation could handle multiple requests at once. This could be fixed pretty easily.
 
 The audio format in the transmission to the server is Kõnele's default raw and uncompressed audio. Kõnele supports many audio formats, but if you change the format on the client side in Kõnele, you will also have to change the sox command on the server side. The encoding format could be determined dynamically by the url on the server, but this is not currently done.
+
+---
+## Alternatives
+
+The whisper.cpp code is more optimized for Apple silicon, and does not run nearly as fast on Android devices as it does on Apple. But it still runs fairly well! If you want to try to run a local (on-phone, offline with no network connection) then I recommend that you look at this:
+
+- [WhisperInput](https://github.com/alex-vt/WhisperInput)
+
+I compiled it and tried it out and it works great. For my setup (Pixel 5a with fast network and fast server) it is significantly slower returning recognitions since it is running on-phone, but it still runs very well! Give it a try.
 
 ---
 ## Feedback
