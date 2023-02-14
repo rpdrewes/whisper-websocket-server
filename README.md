@@ -26,7 +26,7 @@ Install wsocket library. Use a venv if you like:
 
 Install sox audio processing library (e.g. apt install sox, for Ubuntu/Debian).
 
-Install "minimal.py" from this repo into your working directory and edit the host and port in the run(). The "host" should be the IP address of the interface on the local machine that the program should listen for service requests. This might be "localhost", or possibly "0.0.0.0" to listen on all interfaces on the server. The "port" can be most anything but must agree with whatever you set up on the client side (below). I used port 9001. Also edit the "transcmd" in minimal.py to reference the location of your whisper installation.
+Install "minimal.py" from this repo into your working directory and edit the host and port in the run(). The "host" should be the IP address of the interface on the local machine that the program should listen for service requests. This might be "localhost", or possibly "0.0.0.0" to listen on all interfaces on the server. The "port" can be most anything but must agree with whatever you set up on the client side (below). I used port 9001. Also edit the "transcmd" in minimal.py to reference the location of your whisper installation. The "transcmd" is simply a shell command that will be invoked to convert (using sox) the audio file sent over from the phone to a format that whisper.cpp can use, and then invoke whisper.cpp "main" on it with the base recognition model. The result is printed on stdout, captured in the python program minimal.py, and sent back over the websocket to Kõnele on the phone for insertion into the text message, email, or command.
 
 Start the server running from the command line and be ready to watch output:
 ````
