@@ -1,8 +1,10 @@
 # whisper-websocket-server
 
-This is a small python websockets program to run on a server that will read audio input from client Android phones and transcribe them using whisper.cpp voice recognition, and return text string results to the phone for insertion into text message or email or use as voice command.
+This is a small demonstration python websockets program to run on your own server that will accept audio input from a client Android phone and transcribe it to text using whisper.cpp voice recognition, and return the text string results to the phone for insertion into text message or email or use as command or a web search.
 
-An app on the client Android phones called Kõnele acts as the input service which sends the audio to the server and acts as an Android input device, like a keyboard.
+An app on the client Android phones called Kõnele acts as the input service which sends the audio to this server. Kõnele acts as an Android input device, like a keyboard.
+
+Basically, together the system acts like Google's voice input service or voice search, but you self host it so your data stays under your control. It works great for de-Googled open Android phones like LineageOS or Graphene.
 
 This program uses these other software systems:
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp/) for audio to voice transcription, install to server with git clone
