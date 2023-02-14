@@ -1,7 +1,3 @@
-from wsocket import WSocketApp, WebSocketError, logger, run
-from time import sleep
-
-
 """
 
 Simple implementation of a websocket interface to whisper.cpp, intended
@@ -35,22 +31,24 @@ limitations:
 
 """
 
+from wsocket import WSocketApp, WebSocketError, logger, run
+import subprocess
+import re
+
 __author__ = "Rich Drewes"
 __version__ = "1.0"
 __license__ = "MIT"
 
 audfn="audio.raw"           # file where incoming audio is dumped, for analysis by ggeranov whisper.cpp
 
-import subprocess
-
 # for some reason "tiny" model duplicates recognition output on my test file
 # the "base" model does not have this problem
-transcmd='sox -t raw -r 16k -b 16 -c 1 -e signed audio.raw audio.wav rate 16000; /root/voicerec-whisper/whisper.cpp/main -m /root/voicerec-whisper/whisper.cpp/models/ggml-base.en.bin -t 4 -nt audio.wav 2> /dev/null'
+transcmd="sox -t raw -r 16k -b 16 -c 1 -e signed audio.raw audio.wav rate 16000; /root/voicerec-whisper/whisper.cpp/main -m /root/voicerec-whisper/whisper.cpp/models/ggml-base.en.bin -t 4 -nt audio.wav 2> /dev/null"
 
 logger.setLevel(10)  # for debugging
 
 # RPD: later versions of wsocket want the "client" argument to on_close,
-# but installed from pip right now does not want that arg
+# but wsocket installed from pip right now does not want that arg
 #def on_close(self, message, client):
 def on_close(self, message):
     #print(repr(client) + " : " + message)
@@ -62,7 +60,8 @@ def on_connect(client):
     print("RPD: on_connect in minimal.py, client:", repr(client) + " connected")
     print("RPD: on_connect in minimal.py client path:", client.path)
     #exit()
-    audf=open(audfn, "wb")
+    with open(audfn, "wb") as audf:
+        audf.close()
 
 def on_message(message, client):
     #print(repr(client) + " : " + repr(message))
@@ -81,6 +80,7 @@ def on_message(message, client):
         # or a least pretend results, while we process
         print("RPD: exception writing audio, probably done, final message is hopefully EOS:", repr(message))
         m=subprocess.check_output(transcmd, shell=True).decode("utf-8").strip()
+        m=i=re.sub(r'\[.*\]', '', m)
         print("recognition result", m)
         # send json result to konele client:
         msg='{"status": 0, "segment": 0, "result": {"hypotheses": [{"transcript": "%s"}], "final": true}, "id": "1aacc69d-3674-438a-b3c5-fc0ed51769a5"}' % m
@@ -89,11 +89,12 @@ def on_message(message, client):
         client.close()
 
     try:
-        # here we could attempt to do partial recogntion and send an incremental
-        # result back to client. 
-        #client.send("you said: " + message)
-        # do we need to send a status message back every time we get a message? probably not
-        # and what is the deal with the id code? some kind of session id presumably, konele seems to send one but
+        # Here we could attempt to do partial recogntion and send a
+        # partial recognition result back to client.
+        # client.send("you said: " + message)
+        # Do we need to send a status message back every time we get a message?
+        # Probably not. And what is the deal with the id code? some kind of
+        # session id presumably, konele seems to send one but
         # test client.py does not send one
         #client.send("""{"status": 0, "segment": 0, "result": {"hypotheses": [{"transcript": "one."}], "final": false}, "id": "1aacc69d-3674-438a-b3c5-fc0ed51769a5"}""")
         pass
