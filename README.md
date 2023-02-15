@@ -6,7 +6,7 @@ An app on the client Android phones called Kõnele acts as the input service whi
 
 Basically, together the system acts like Google's voice input service or voice search, but you self host it so your data stays under your control. It works great for de-Googled open Android phones like LineageOS or Graphene.
 
-Though was written as a simple test, it works so well for me that it is part of my regular phone usage!
+Though written as a simple test, this works so well for me that it is part of my regular phone usage!
 
 This program uses these other software systems:
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp/) for audio to voice transcription, install to server with git clone
