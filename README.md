@@ -1,10 +1,12 @@
 # whisper-websocket-server
 
-This is a small demonstration python websockets program to run on your own server that will accept audio input from a client Android phone and transcribe it to text using whisper.cpp voice recognition, and return the text string results to the phone for insertion into text message or email or use as command or a web search.
+This is a small demonstration Python websockets program to run on your own server that will accept audio input from a client Android phone and transcribe it to text using whisper.cpp voice recognition, and return the text string results to the phone for insertion into text message or email or use as command or a web search.
 
 An app on the client Android phones called Kõnele acts as the input service which sends the audio to this server. Kõnele acts as an Android input device, like a keyboard.
 
 Basically, together the system acts like Google's voice input service or voice search, but you self host it so your data stays under your control. It works great for de-Googled open Android phones like LineageOS or Graphene.
+
+Though was just a simple test, it works so well for me that it is part of my regular phone usage!
 
 This program uses these other software systems:
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp/) for audio to voice transcription, install to server with git clone
@@ -15,9 +17,9 @@ This program uses these other software systems:
 The setup is pretty simple, with a few things on the server side and a few on the client side (Android phone).
 
 ---
-## Server side setup (python websocket server with sox+whisper.cpp)
+## Server side setup (Python websocket server with sox+whisper.cpp)
 
-On your server machine where the voice recognition will be performed, install ggerganov whisper.cpp from github repo as explained there. Link above. Download "base" model. Test it to the point that you can run the local transcription tests in the README with base model.
+On your server machine where the voice recognition will be performed, install ggerganov whisper.cpp from github repo as explained there. Link above. Download "base" model. Test it to the point that you can run the local transcription tests in the README with base model. UPDATE: the "tiny" model works very well too and is much faster. I now recommend you use the "tiny" model and I have modified the code in minimal.py to reflect that.
 
 Your server should have a well-known IP address. You could probably also use dynamic DNS of some sort, instead of a fixed IP address.
 
@@ -28,7 +30,7 @@ Install wsocket library. Use a venv if you like:
 
 Install sox audio processing library (e.g. apt install sox, for Ubuntu/Debian).
 
-Install "minimal.py" from this repo into your working directory and edit the host and port in the run(). The "host" should be the IP address of the interface on the local machine that the program should listen for service requests. This might be "localhost", or possibly "0.0.0.0" to listen on all interfaces on the server. The "port" can be most anything but must agree with whatever you set up on the client side (below). I used port 9001. Also edit the "transcmd" in minimal.py to reference the location of your whisper installation. The "transcmd" is simply a shell command that will be invoked to convert (using sox) the audio file sent over from the phone to a format that whisper.cpp can use, and then invoke whisper.cpp "main" on it with the base recognition model. The result is printed on stdout, captured in the python program minimal.py, and sent back over the websocket to Kõnele on the phone for insertion into the text message, email, or command.
+Install "minimal.py" from this repo into your working directory and edit the host and port in the run(). The "host" should be the IP address of the interface on the local machine that the program should listen for service requests. This might be "localhost", or possibly "0.0.0.0" to listen on all interfaces on the server. The "port" can be most anything but must agree with whatever you set up on the client side (below). I used port 9001. Also edit the "transcmd" in minimal.py to reference the location of your whisper installation. The "transcmd" is simply a shell command that will be invoked to convert (using sox) the audio file sent over from the phone to a format that whisper.cpp can use, and then invoke whisper.cpp "main" on it with the base recognition model. The result is printed on stdout, captured in the Python program minimal.py, and sent back over the websocket to Kõnele on the phone for insertion into the text message, email, or command.
 
 Start the server running from the command line and be ready to watch output:
 ````
