@@ -41,9 +41,7 @@ __license__ = "MIT"
 
 audfn="audio.raw"           # file where incoming audio is dumped, for analysis by ggeranov whisper.cpp
 
-# for some reason "tiny" model duplicates recognition output on my test file
-# the "base" model does not have this problem
-transcmd="sox -t raw -r 16k -b 16 -c 1 -e signed audio.raw audio.wav rate 16000; /root/voicerec-whisper/whisper.cpp/main -m /root/voicerec-whisper/whisper.cpp/models/ggml-base.en.bin -t 4 -nt audio.wav 2> /dev/null"
+transcmd="sox -t raw -r 16k -b 16 -c 1 -e signed audio.raw audio.wav rate 16000; /root/voicerec-whisper/whisper.cpp/main -m /root/voicerec-whisper/whisper.cpp/models/ggml-tiny.en.bin -t 4 -nt audio.wav 2> /dev/null"
 
 logger.setLevel(10)  # for debugging
 
