@@ -10,7 +10,7 @@ Though written as a simple test, this works so well for me that it is part of my
 
 This program uses these other software systems:
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp/) for audio to voice transcription, install to server with git clone
-- [Kõnele](https://github.com/Kaljurand/K6nele-service) client Android app; install to phone via f-droid repo is recommended
+- [Kõnele](https://f-droid.org/en/packages/ee.ioc.phon.android.speak/) client Android app; install to phone via f-droid repo is recommended
 - [wsocket](https://github.com/ksenginew/WSocket) Python websocket library, install to server with pip
 - sox audio processing command line tools, install to server with OS tools (apt etc.)
 
