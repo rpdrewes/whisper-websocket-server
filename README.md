@@ -17,6 +17,17 @@ This program uses these other software systems:
 The setup is pretty simple, with a few things on the server side and a few on the client side (Android phone).
 
 ---
+## Demo video
+
+The recogntion here was done using the "tiny" model.
+
+
+
+https://user-images.githubusercontent.com/10035429/219758618-c6c05a27-059d-427a-9e13-550fedbc281a.mp4
+
+
+
+---
 ## Server side setup (Python websocket server with sox+whisper.cpp)
 
 On your server machine where the voice recognition will be performed, install ggerganov whisper.cpp from github repo as explained there. Link above. Download "base" model. Test it to the point that you can run the local transcription tests in the README with base model. UPDATE: the "tiny" model works very well too and is much faster. I now recommend you use the "tiny" model and I have modified the code in minimal.py to reflect that.
