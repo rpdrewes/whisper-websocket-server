@@ -19,12 +19,13 @@ The setup is pretty simple, with a few things on the server side and a few on th
 ---
 ## Demo video
 
-The recogntion here was done using the "tiny" model.
-
+Both recogntions here were done using the "tiny" model.
 
 
 https://user-images.githubusercontent.com/10035429/219758618-c6c05a27-059d-427a-9e13-550fedbc281a.mp4
 
+
+https://user-images.githubusercontent.com/10035429/219812393-9a4adbc6-09b3-41ec-aa3a-dfb84b60730e.mp4
 
 
 ---
