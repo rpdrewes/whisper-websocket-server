@@ -63,6 +63,8 @@ Configure Kõnele as follows. Under "Kõnele settings"->"Recognition services"->
 
 The port number in that ws:// URL must agree with the port that you set the server to run, above.
 
+Make sure you set the "Audio format" to "raw" (the default).
+
 I also use the "Anysoft Keyboard" app from f-droid as my basic input mechanism on my Android phone. I think things will work with the regular Android input keyboard system, but if you have problems, install the Anysoft Keyboard and try again.
 
 ---
@@ -81,7 +83,7 @@ There is absolutely no security in this implementation. I run this over a tinc V
 
 There can only be one client connection to the voice recognition server at a time. The code does not attempt to use a different filename to capture the audio if multiple requests come in at once. I'm not even sure if the websockets implementation could handle multiple requests at once. This could be fixed pretty easily.
 
-The audio format in the transmission to the server is Kõnele's default raw and uncompressed audio. Kõnele supports many audio formats, but if you change the format on the client side in Kõnele, you will also have to change the sox command on the server side. The encoding format could be determined dynamically by the url on the server, but this is not currently done.
+The audio format in the transmission to the server is Kõnele's default raw and uncompressed audio. Kõnele supports also FLAC, but if you change the format on the client side in Kõnele, you will also have to change the sox command on the server side. The encoding format could be determined dynamically by the url on the server, but this is not currently done.
 
 ---
 ## Alternatives
