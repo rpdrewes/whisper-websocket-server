@@ -78,7 +78,7 @@ I also use the "Anysoft Keyboard" app from f-droid as my basic input mechanism o
 
 In order to get the microphone on the virtual keyboard to invoke Kõnele (and send audio to the server for transcription) you will probably have to invoke the Kõnele app first on its own once, after you boot your phone. After that it should happen automatically when you invoke your normal input system, until you reboot your phone.
 
-When you click on the microphone input on your Android phone's virtual keyboard, you should see the server side "minimal.py" print a message acknowledging the connection. As you speak, the audio data should be captured into a .raw audio file in the working directory on the server side. When you click to stop input on the phone, you should see a message on the server side indicating that the audio is complete, and whisper.cpp should be invoked on the saved audio file after conversion to an audio format that whisper.cpp wants. Then a message should be sent back to the phone with the text of the transcription. The resulting text can be inserted into a text message or email as you wish.
+When you click on the microphone input on your Android phone's virtual keyboard, you should see the server side "minimal-fw-mem.py" print a message acknowledging the connection. As you speak, the audio data should be captured in memory on the server side. When you click to stop input on the phone, you should see a message on the server side indicating that the audio is complete, and faster-whisper will be invoked on the audio data. Then a message should be sent back to the phone with the text of the transcription. The resulting text can be inserted into a text message or email as you wish.
 
 If you click on the Kõnele app itself (instead of the microphone on the Android keyboard) it will do a web search with the recognized text instead.
 
@@ -108,12 +108,12 @@ That will start the docker image you just created and map the system port 9002 t
 
 There is minimal security in this implementation. The audio data and recognition results are sent in the clear across the network from your phone to the server and back. If you leave the server running on an open port on your server, other people may be able to connect to it and use your server to perform voice recogntion (or possibly do something worse, if there is a way to exploit the server). I run this over a tinc VPN, but if you expose the server IP to the world there are security implications. That is your problem.
 
-The audio format in the transmission to the server is Kõnele's default raw and uncompressed audio. Kõnele supports many audio formats, but if you change the format on the client side in Kõnele, you will probably also need to change the minimal-fw-mem.py on the server side. The encoding format could be determined dynamically by the url on the server, but this is not currently done.
+The audio format in the transmission to the server is Kõnele's default raw and uncompressed audio. Kõnele supports multiple audio formats, but if you change the format on the client side in Kõnele, you will probably also need to change the minimal-fw-mem.py on the server side. The encoding format could be determined dynamically by the url on the server, but this is not currently done.
 
 ---
 ## Alternatives
 
-The whisper.cpp code is more optimized for Apple silicon, and does not run nearly as fast on Android phones as it does on Apple phones (a quarter the speed?) But it still runs fairly well! If you want to try to run a local (on-phone, offline with no network connection) then I recommend that you look at this:
+If you want to try to run a local (on-phone, offline with no network connection) then I recommend that you look at this:
 
 - [WhisperInput](https://github.com/alex-vt/WhisperInput)
 
@@ -123,7 +123,7 @@ Another server based approach uses the Kaldi voice recognizer instead of Whisper
 
 - [Kaldi-Gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server)
 
-I ran a Kaldi server for years and accessed it from my open Android phone using Kõnele as the frontend (just as I describe above). It worked pretty well. I find Whisper to be a much superior voice recognition system though. I think maybe Kaldi works better in other languages than it does in English, but I doubt it compares to Whisper these days.
+I ran this Kaldi server for years and accessed it from my open Android phone using Kõnele as the frontend (just as I describe above for this project). It worked pretty well. I find Whisper to be a much superior voice recognition system though. I think maybe Kaldi works better in other languages than it does in English, but I doubt it compares in recognition accuracy to Whisper these days.
 
 ---
 ## Feedback
