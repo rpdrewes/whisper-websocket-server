@@ -9,7 +9,7 @@ Basically, together the system acts like Google's voice input service or voice s
 Though written as a simple test, this works so well that it has been part of my regular daily-driver phone usage for a year!
 
 New features:
-- Switched the default recogntion from whisper.cpp to faster-whisper for much improved performance. The new default model is "base.en" rather and both recogntion accuracy and speed are improved compared to whisper.cpp with "tiny.en"!
+- Switched the default recogntion from whisper.cpp to faster-whisper for much improved performance. The new default model is "base.en" and both recogntion accuracy and speed are improved compared to whisper.cpp with "tiny.en"!
 - Implemented completely in memory with no temporary file, so performance is better and multiple simultaneous recognitions are supported. No more using system() to shell to convert audio and invoke whisper.cpp, also improving speed and security.
 - A Dockerfile is provided to help you set up your own docker image if you prefer to run it that way.
 
