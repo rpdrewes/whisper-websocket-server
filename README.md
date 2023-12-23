@@ -14,7 +14,7 @@ New features:
 - A Dockerfile is provided to help you set up your own docker image if you prefer to run it that way.
 
 This program uses these other software systems:
-- [faster-whisper](https://https://github.com/SYSTRAN/faster-whisper) for audio to voice transcription, install to server with pip (see below)
+- [faster-whisper](https://github.com/SYSTRAN/faster-whisper) for audio to voice transcription, install to server with pip (see below)
 - [Kõnele](https://f-droid.org/en/packages/ee.ioc.phon.android.speak/) client Android app; install to phone via f-droid repo is recommended
 - [wsocket](https://github.com/ksenginew/WSocket) Python websocket library, install to server with pip (see below)
 
