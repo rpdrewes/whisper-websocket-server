@@ -36,7 +36,7 @@ https://user-images.githubusercontent.com/10035429/219812393-9a4adbc6-09b3-41ec-
 ---
 ## Server side setup (Python websocket server using faster-whisper library)
 
-On your server machine where the voice recognition will be performed, install faster-whisper with pip as explained as they direct. Link above. You might want to .
+On your server machine where the voice recognition will be performed, install faster-whisper with pip as explained as they direct. Link above.
 
 Your server should have a well-known IP address. You could probably also use dynamic DNS of some sort, instead of a fixed IP address.
 
@@ -66,7 +66,7 @@ Install Kõnele app (also known as K6nele) from f-droid repo onto your Android p
 
 Configure Kõnele as follows. Under "Kõnele settings"->"Recognition services"->"Kõnele (fast recognition)" where it says "Service based on the Kaldi GStreamer server..." set the URL to point to your server address and port (set up above), for example:
 ````
-    ws://YOURSERVERHOSTNAMEORIPADDRESS:9001/client/ws/speech
+    ws://YOURSERVERHOSTNAMEORIPADDRESS:9002/client/ws/speech
 ````
 
 The port number in that ws:// URL must agree with the port that you set the server to run, above.
