@@ -1,25 +1,31 @@
 # whisper-websocket-server
 
-This is a small demonstration Python websockets program to run on your own server that will accept audio input from a client Android phone and transcribe it to text using whisper.cpp voice recognition, and return the text string results to the phone for insertion into text message or email or use as command or a web search.
+This is a demonstration Python websockets program to run on your own server that will accept audio input from a client Android phone and transcribe it to text using whisper.cpp voice recognition, and return the text string results to the phone for insertion into text message or email or use as command or a web search.
 
-An app on the client Android phones called Kõnele acts as the input service which sends the audio to this server. Kõnele acts as an Android input device, like a keyboard.
+An open source app on the client Android phones called Kõnele acts as the input service which sends the audio to this server. Kõnele acts as an Android input device, like a keyboard.
 
-Basically, together the system acts like Google's voice input service or voice search, but you self host it so your data stays under your control. It works great for de-Googled open Android phones like LineageOS or Graphene.
+Basically, together the system acts like Google's voice input service or voice search, but you self host it so your data stays under your control. It works great for de-Googled open Android phones like LineageOS or Graphene. It seems to work better than Siri or Ok Google in recognition accuracy in my experience, though those services provide more than just voice recognition.
 
-Though written as a simple test, this works so well for me that it is part of my regular phone usage!
+Though written as a simple test, this works so well that it has been part of my regular daily-driver phone usage for a year!
+
+New features:
+- Switched the default recogntion from whisper.cpp to faster-whisper for much improved performance. The new default model is "base.en" rather and both recogntion accuracy and speed are improved compared to whisper.cpp with "tiny.en"!
+- Implemented completely in memory with no temporary file, so performance is better and multiple simultaneous recognitions are supported. No more using system() to shell to convert audio and invoke whisper.cpp, also improving speed and security.
+- A Dockerfile is provided to help you set up your own docker image if you prefer to run it that way.
 
 This program uses these other software systems:
-- [whisper.cpp](https://github.com/ggerganov/whisper.cpp/) for audio to voice transcription, install to server with git clone
+- [faster-whisper](https://https://github.com/SYSTRAN/faster-whisper) for audio to voice transcription, install to server with pip (see below)
 - [Kõnele](https://f-droid.org/en/packages/ee.ioc.phon.android.speak/) client Android app; install to phone via f-droid repo is recommended
-- [wsocket](https://github.com/ksenginew/WSocket) Python websocket library, install to server with pip
-- sox audio processing command line tools, install to server with OS tools (apt etc.)
+- [wsocket](https://github.com/ksenginew/WSocket) Python websocket library, install to server with pip (see below)
 
 The setup is pretty simple, with a few things on the server side and a few on the client side (Android phone).
+
+For instructions on using the older whisper.cpp implementation, refer to README-old.md in this repository.
 
 ---
 ## Demo video
 
-Both recogntions here were done using the "tiny" model.
+Both recogntions here were done using the "tiny" model using whisper.cpp. The new preferred recognizer is faster-whisper instead of whisper.cpp, but the recognition results have only improved in accuracy and speed.
 
 
 https://user-images.githubusercontent.com/10035429/219758618-c6c05a27-059d-427a-9e13-550fedbc281a.mp4
@@ -27,29 +33,31 @@ https://user-images.githubusercontent.com/10035429/219758618-c6c05a27-059d-427a-
 
 https://user-images.githubusercontent.com/10035429/219812393-9a4adbc6-09b3-41ec-aa3a-dfb84b60730e.mp4
 
-
 ---
-## Server side setup (Python websocket server with sox+whisper.cpp)
+## Server side setup (Python websocket server using faster-whisper library)
 
-On your server machine where the voice recognition will be performed, install ggerganov whisper.cpp from github repo as explained there. Link above. Download "base" model. Test it to the point that you can run the local transcription tests in the README with base model. UPDATE: the "tiny" model works very well too and is much faster. I now recommend you use the "tiny" model and I have modified the code in minimal.py to reflect that.
+On your server machine where the voice recognition will be performed, install faster-whisper with pip as explained as they direct. Link above. You might want to .
 
 Your server should have a well-known IP address. You could probably also use dynamic DNS of some sort, instead of a fixed IP address.
+
+Install faster-whisper library. Use a venv if you like:
+````
+    pip install faster-whisper
+````
 
 Install wsocket library. Use a venv if you like:
 ````
     pip install wsocket
 ````
 
-Install sox audio processing library (e.g. apt install sox, for Ubuntu/Debian).
-
-Install "minimal.py" from this repo into your working directory and edit the host and port in the run(). The "host" should be the IP address of the interface on the local machine that the program should listen for service requests. This might be "localhost", or possibly "0.0.0.0" to listen on all interfaces on the server. The "port" can be most anything but must agree with whatever you set up on the client side (below). I used port 9001. Also edit the "transcmd" in minimal.py to reference the location of your whisper installation. The "transcmd" is simply a shell command that will be invoked to convert (using sox) the audio file sent over from the phone to a format that whisper.cpp can use, and then invoke whisper.cpp "main" on it with the base recognition model. The result is printed on stdout, captured in the Python program minimal.py, and sent back over the websocket to Kõnele on the phone for insertion into the text message, email, or command.
+Install "minimal-fw-mem.py" from this repo into your working directory and edit the host and port in the run(). The "host" should be the IP address of the interface on the local machine that the program should listen for service requests. This might be "localhost", or possibly "0.0.0.0" to listen on all interfaces on the server. The "port" can be most anything but must agree with whatever you set up on the client side (below). I used port 9002. The recognition result from faster-whisper is sent back over the websocket to Kõnele on the phone side for insertion into the text message, email, or command.
 
 Start the server running from the command line and be ready to watch output:
 ````
-    python3 minimal.py
+    python3 minimal-fw-mem.py
 ````
 
-Eventually you will set this up to start automatically, like in /etc/rc.local or using systemd or whatever. I like to set it up to start in a "screen" session.
+Eventually you will set this up to start automatically, like in /etc/rc.local or using systemd or whatever. I like to set it up to start in a "screen" session so it will persist after logout but you can also reconnect and view the output. You can also run the server in a Docker if you prefer (see below).
 
 ---
 ## Client side setup (Android phone using Kõnele app for input)
@@ -63,8 +71,6 @@ Configure Kõnele as follows. Under "Kõnele settings"->"Recognition services"->
 
 The port number in that ws:// URL must agree with the port that you set the server to run, above.
 
-Make sure you set the "Audio format" to "raw" (the default).
-
 I also use the "Anysoft Keyboard" app from f-droid as my basic input mechanism on my Android phone. I think things will work with the regular Android input keyboard system, but if you have problems, install the Anysoft Keyboard and try again.
 
 ---
@@ -77,13 +83,32 @@ When you click on the microphone input on your Android phone's virtual keyboard,
 If you click on the Kõnele app itself (instead of the microphone on the Android keyboard) it will do a web search with the recognized text instead.
 
 ---
+## Docker
+
+If you wish, you can easily run this system using Docker, which gives some improved security isolation (but remember, the audio traffic and recognition results are NOT encrypted on the network!)
+
+To do this, from the directory that contains the Dockerfile and minimal-fw-mem.py from the repository, create a docker image called "fwmem":
+
+````
+    docker build -t fwmem .
+````
+
+This will take some time to build the image based on Ubuntu Linux base image containing faster-whisper, websockets library, and all their dependencies, according to the specification in Dockerfile.
+
+You can then run this docker image as follows:
+
+````
+    docker run -p 9002:9002 fwmem
+````
+
+That will start the docker image you just created and map the system port 9002 to the server running on port 9002 inside the docker.
+
+---
 ## Limitations and cautions
 
-There is absolutely no security in this implementation. I run this over a tinc VPN, but if you expose the server IP to the world there are security implications. That is your problem.
+There is minimal security in this implementation. The audio data and recognition results are sent in the clear across the network from your phone to the server and back. If you leave the server running on an open port on your server, other people may be able to connect to it and use your server to perform voice recogntion (or possibly do something worse, if there is a way to exploit the server). I run this over a tinc VPN, but if you expose the server IP to the world there are security implications. That is your problem.
 
-There can only be one client connection to the voice recognition server at a time. The code does not attempt to use a different filename to capture the audio if multiple requests come in at once. I'm not even sure if the websockets implementation could handle multiple requests at once. This could be fixed pretty easily.
-
-The audio format in the transmission to the server is Kõnele's default raw and uncompressed audio. Kõnele supports also FLAC, but if you change the format on the client side in Kõnele, you will also have to change the sox command on the server side. The encoding format could be determined dynamically by the url on the server, but this is not currently done.
+The audio format in the transmission to the server is Kõnele's default raw and uncompressed audio. Kõnele supports many audio formats, but if you change the format on the client side in Kõnele, you will probably also need to change the minimal-fw-mem.py on the server side. The encoding format could be determined dynamically by the url on the server, but this is not currently done.
 
 ---
 ## Alternatives
