@@ -13,7 +13,7 @@ RUN pip install wsocket
 USER fwuser
 
 # this will run when docker image is created, to force download of model data from openai
-# so that model date will be included in the image for later use rather than downloading
+# so that model data will be included in the image for later use rather than downloading
 # that data each time the docker is run:
 RUN python3 /home/fwuser/minimal-fw-mem.py onlymodel
 
