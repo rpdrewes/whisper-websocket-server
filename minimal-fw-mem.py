@@ -1,8 +1,8 @@
 """
 
-Simple implementation of a websocket interface to whisper.cpp, intended
-to act like the "kaldi-gstreamer" voice recognition server for use with
-Konele app clients from Android phones.
+Simple implementation of a websocket interface to faster-whisper or
+whisper.cpp, intended to act like the "kaldi-gstreamer" voice recognition
+server for use with Konele app clients from Android phones.
 
 This uses faster-whisper, which can be installed like this:
 
@@ -54,8 +54,6 @@ from faster_whisper import WhisperModel
 __author__ = "Rich Drewes"
 __version__ = "1.0"
 __license__ = "MIT"
-
-audfn="audio.raw"           # file where incoming audio is dumped, for analysis by ggeranov whisper.cpp
 
 model_size = "base.en"
 
