@@ -1,6 +1,6 @@
 # whisper-websocket-server
 
-This is a demonstration Python websockets program to run on your own server that will accept audio input from a client Android phone and transcribe it to text using whisper.cpp voice recognition, and return the text string results to the phone for insertion into text message or email or use as command or a web search.
+This is a demonstration Python websockets program to run on your own server that will accept audio input from a client Android phone and transcribe it to text using Whisper voice recognition, and return the text string results to the phone for insertion into text message or email or use as command or a web search.
 
 An open source app on the client Android phones called Kõnele acts as the input service which sends the audio to this server. Kõnele acts as an Android input device, like a keyboard.
 
@@ -14,9 +14,10 @@ New features:
 - A Dockerfile is provided to help you set up your own docker image if you prefer to run it that way.
 
 This program uses these other software systems:
-- [faster-whisper](https://github.com/SYSTRAN/faster-whisper) for audio to voice transcription, install to server with pip (see below)
-- [Kõnele](https://f-droid.org/en/packages/ee.ioc.phon.android.speak/) client Android app; install to phone via f-droid repo is recommended
-- [wsocket](https://github.com/ksenginew/WSocket) Python websocket library, install to server with pip (see below)
+- [whisper](https://openai.com/research/whisper) excellent voice recognition tech
+- [faster-whisper](https://github.com/SYSTRAN/faster-whisper) optimization of Whisper using CTranslate
+- [Kõnele](https://f-droid.org/en/packages/ee.ioc.phon.android.speak/) open source client Android app to send audio to this server
+- [wsocket](https://github.com/ksenginew/WSocket) minimalist Python websocket library
 
 The setup is pretty simple, with a few things on the server side and a few on the client side (Android phone).
 
